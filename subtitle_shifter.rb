@@ -126,12 +126,33 @@ if !File.exist?(file_name)
 end
 puts("File found!\n ")
 
-#Enter how many seconds to shift
+#Enter how many seconds to shift (only from 1 to 59, doesn't shift backwards)
 puts("How many seconds would you like to shift?")
-#only from 1 to 59, doesn't shift backwards and shifts whole file. only a portion in the future
 seconds = gets.chomp.to_i
+puts
+while (seconds < 0 || seconds > 59)
+  puts("Invalid input! Please enter a number 0 to 59")
+  seconds = gets.chomp.to_i
+  puts
+end
 
-#better functionality in future?
+#For shifting only a section
+puts("Would you like to shift only a section? (y/n)")
+section_only = gets.chomp.downcase
+puts
+while !(section_only == "y" || section_only == "n")
+  puts("Invalid input! Please enter y/n")
+  section_only = gets.chomp.downcase
+  puts
+end
+if section_only == "y"
+  puts("Enter subtitle number to begin at")
+  begin_section = gets.chomp.to_i
+else
+  begin_section = 0
+end
+
+#need to add functionality to shift only a section
 target = open("shifted.srt", 'w')
 lines = File.readlines(file_name)
 lines.each do |line|
